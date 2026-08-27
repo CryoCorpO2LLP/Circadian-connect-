@@ -1,0 +1,19 @@
+# Circadian Connect LLP
+
+Circadian Connect is India's specialist in responsible AI evaluation, socio-technical research, and governance consulting. Founded by Dr. Jaya Goyal.
+
+## Key Focus Areas
+- **Responsible AI Evaluation**: Dataset and model bias assessments, AI risk mapping, and human-centred evaluation of AI products for Indian and Global South deployments.
+- **Socio-technical Evaluation & MEL**: Theory of Change design, governance diagnostics, and embedded Monitoring, Evaluation, and Learning (MEL) modules.
+- **Social Network Analysis for Governance**: Mapping networks of influence in local institutions for citizen accountability.
+
+## Key Links
+- **Home**: https://circadianconnect.com/
+- **Responsible AI**: https://circadianconnect.com/research_work
+- **Governance**: https://circadianconnect.com/usecases
+- **About Us**: https://circadianconnect.com/about
+- **FAQ**: https://circadianconnect.com/faq
+
+## Contact
+- **Email**: support@circadianconnect.com
+- **Book a Meeting**: https://calendly.com/circadianconnect-support/30min

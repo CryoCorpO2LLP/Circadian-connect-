@@ -1,0 +1,867 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Play, Check, Plus, MoreVertical, Search, Bell,
+  ChevronDown, ChevronRight, Home, CheckSquare, FileText,
+  CreditCard, TrendingUp, Settings, ArrowUpRight, ArrowDownLeft,
+  ShieldAlert, Users, Award, BookOpen, HelpCircle, Activity,
+  Layers, Sparkles, ChevronLeft, GraduationCap, Briefcase,
+  MapPin, Mail, Phone, Globe, Shield, Star, Zap, Target,
+  BarChart3, Network, BookMarked, Building2, X, Menu, Quote
+} from 'lucide-react';
+
+const NAVY = '#4c1d95';
+const TEAL = '#f97316';
+
+const Button = ({ className = '', variant = 'primary', size = 'md', ...props }) => {
+  const base = 'inline-flex items-center justify-center font-bold uppercase tracking-wide transition-all duration-200 focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none active:scale-[0.97] select-none cursor-pointer rounded-full';
+  const sizes = {
+    sm: 'text-[11px] px-4 py-2',
+    md: 'text-xs px-5 py-2.5',
+    lg: 'text-xs px-7 py-3.5',
+    xl: 'text-sm px-8 py-4',
+  };
+  const variants = {
+    primary: 'bg-[#6d28d9] text-white hover:bg-[#253a8e] shadow-sm',
+    teal: 'bg-[#f97316] text-white hover:bg-[#ea580c] shadow-sm',
+    'outline-white': 'border-2 border-white text-white bg-transparent hover:bg-white hover:text-[#6d28d9]',
+  };
+  return (
+    <button className={`${base} ${sizes[size]} ${variants[variant] || variants.primary} ${className}`} {...props} />
+  );
+};
+
+const Eyebrow = ({ children }) => (
+  <div className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-[#f97316]/10 border border-[#f97316]/20 mb-4">
+    <Sparkles className="h-3.5 w-3.5 text-[#f97316]" />
+    <span className="text-[10px] font-black uppercase tracking-wider text-[#ea580c]">{children}</span>
+  </div>
+);
+
+const Card = ({ className = '', children, ...props }) => (
+  <div className={`rounded-2xl border border-slate-200 bg-white ${className}`} {...props}>{children}</div>
+);
+
+
+  const indiaUseCases = [
+    {
+      theme: "Nutrition Governance",
+      title: "Child Nutrition Governance",
+      image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1000&auto=format&fit=crop",
+      link: "https://www.circadianconnect.com/child-nutrition-governance",
+      description: "We are specialists in Policy analysis, Advocacy, and Evaluation services on programmes on Early Childhood Care and Nutrition. We consult on government policies and programs related to child nutrition. It includes data collection and analysis to evaluate the effectiveness of child nutrition initiatives. Report writing and policy recommendations. Dr. Jaya Goyal has published several research papers on the Governance of Public Health and Child Nutrition programmes in India, including latest book funded by ICSSR and published by Motilal Banarsidas Publishers, titled, 'Public Service Delivery: Does Accountability and Institutions Matter?'. She has co-authored a TISS Report on working of ICDS programme under the 11th Five Year Plan for the Andaman and Nicobar Islands, funded by the erstwhile Planning Commission of India.",
+      projects: [
+        "Book Release 2024: Goyal, Jaya. Public Service Delivery: Does Accountability and Local Institutions Matter? A Comparative Perspective of Child Nutrition Programmes in India.",
+        "Journal Article: Goyal, Jaya (2018). Andaman Nicobar Islands Recovery: Food and Nutrition Schemes. Issue No. 175. Southasiadisasters.net.",
+        "International Journal Article: Goyal, Jaya & Madhushree Sekher. (2015). Accountability, Nutrition and Local Institutions in India.",
+        "Book Chapter: Goyal, Jaya. 2015. Role of State in Public Private Partnerships in Reproductive and Child Health Services.",
+        "International Journal Article: Goyal, Jaya. (2014). Centrally sponsored schemes in Andaman and Nicobar Islands: a governance paradox.",
+        "Indian Journal Article: Jaswal, Surinder & Goyal, Jaya. (2011). Public Sector Health Scheme for the Poor: Maharashtra's Jeevandayee Arogya Yojana.",
+        "Indian Journal Article: Datta, Vrinda & Goyal, Jaya. (2011). Reaching the Unreached: The Integrated Child Development Scheme in Maharashtra."
+      ]
+    },
+    {
+      theme: "International Higher Education",
+      title: "International Higher Education Partnerships",
+      image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1000&auto=format&fit=crop",
+      link: "https://www.circadianconnect.com/international-higher-education-partnersh-1",
+      description: "Higher Education is at the forefront of achieving impactful solutions at the interface of science and society. Our Higher Education solutions offer strategy development for international academic collaborations, and research on partnership evaluation using IAD framework methodology. Circadian Connect LLP is committed to bridging the gap between scientific innovation and social impact. We are dedicated to providing tailored guidance to help institutions achieve international academic partnerships that add value to their institution.",
+      projects: [
+        "Partnership design and development: A paper presented, 'Can unequal partners succeed with matched efforts? Lessons from UK-India partnerships in Higher Education.' at BAICE, University of Edinburgh, Scotland UK (2022).",
+        "Strategy development: A paper presented, 'Are matched efforts viable in North-South partnerships? Learnings from UK-India Higher Education Initiative (UKIERI)' at CESA 11th Biennial conference at Hiroshima (2023).",
+        "Analysis of OBC Reservation Policy, an evidence-based report by TISS and funded by NASI (National Academy of Sciences, India), published in EPW."
+      ]
+    },
+    {
+      theme: "Environment Social Governance",
+      title: "ESG (Environment Social Governance)",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000&auto=format&fit=crop",
+      link: "https://www.circadianconnect.com/esg-environment-social-governance",
+      description: "Our track in Governance has included: Improving delivery of public programmes by analyzing their governance structures; Performance and Impact evaluations; Advisory on Public-private Partnerships; Risk Assessment and mitigation strategies. One of the innovative and experimental governance reforms project that the founder has experience in is the Outcome Budget & Social Audits, with the Government of Maharashtra. Outcome Budgets were perceived as report cards of the government and hence politically risky. Social Audits were institutionalized by the CAG in 2011, demonstrating the impact of such policy work.",
+      projects: [
+        "Outcome Budget with 32 government schemes across 11 departments published as a special issue of TISS's in-house journal the Indian Journal of Social Work (IJSW).",
+        "Report on Narmada Sardar Sarovar Dam presents the longest litigation case from India's independence, from a scientific and humanitarian lens.",
+        "The Urban Age Project by LSE Cities and TISS Mumbai compared the tracks of development of many cities of the world on various development parameters."
+      ]
+    },
+    {
+      theme: "Gender & Science",
+      title: "Women in Science / Gender",
+      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1000&auto=format&fit=crop",
+      link: "https://www.circadianconnect.com/women-in-science-gender",
+      description: "We offer gender transformative measures for ESR audits, programme design outcomes that are crucial for the implementation of effective solutions at the interface of science and society. Our expertise includes: Gender mainstreaming in development, Gender impact assessments, Gender transformative designs, and Women in Science trends. We help our clients articulate the intersection of gender and science and develop science communication strategies tailored to their needs.",
+      projects: [
+        "Goyal, Jaya. (2021). Science Diplomacy & Gender: A Case Study of the British Council. Science Diplomacy: A New Chapter in IISF 2020.",
+        "Goyal, Jaya 2021. The expanding scope of careers for Women in STEM. Science Diplomacy and Gender, a paper presented virtually at India International Science Festival.",
+        "Goyal, Jaya, 2017. Ponder Over Potbelly. The Asian Age.",
+        "Quoted in 'Gender Discourse' by Mumbai Mix Team. The Afternoon Dispatch and Courier.",
+        "Quoted in 'Why do women quit working?' by Vibha Singh. Free Press Journal Mumbai Edition.",
+        "Quoted in 'Are you Ready to be a Mom?' By Vibha Singh. Free Press Journal Mumbai Edition.",
+        "Book Chapter: 'Role of State in Public Private Partnerships in Reproductive & Child Health Services', funded by Observer Research Foundation.",
+        "Goyal, Jaya. 2006. 'Sex Sense:' Mumbai Mirror."
+      ]
+    }
+  ];
+
+          
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+
+
+  const researchPublications = [
+    { type: "Book Release 2024", title: "Goyal, Jaya. Public Service Delivery: Does Accountability and Local Institutions Matter? A Comparative Perspective of Child Nutrition Programmes in India", desc: "supported by Publication Grant from ICSSR (Indian Council for Social Science Research), Govt of India.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "Journal Article", title: "Goyal, Jaya (2018). Andaman Nicobar Islands Recovery: Food and Nutrition Schemes.", desc: "Understanding Recovery in Andaman and Nicobar Islands. Issue No. 175. Southasiadisasters.net. October 2018.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "International Journal Article", title: "Goyal, Jaya & Madhushree Sekher. (2015). Accountability, Nutrition and Local Institutions in India.", desc: "Development. Rethinking Democracy, Society for International Development, 58(1), United Kingdom: Palgrave McMillan.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "Book Chapter", title: "Goyal, Jaya. 2015. Role of State in Public Private Partnerships in Reproductive and Child Health Services", desc: "in B V Sharma (Ed.), Medical Anthropology, New Delhi: Concept Publishers.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "International Journal Article", title: "Goyal, Jaya. (2014). Centrally sponsored schemes in Andaman and Nicobar Islands: a governance paradox.", desc: "International Journal of Sociology and Social Policy, 34(3/4), 196–213.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "Indian Journal Article", title: "Jaswal, Surinder & Goyal, Jaya. (2011). Public Sector Health Scheme for the Poor: Maharashtra's Jeevandayee Arogya Yojana.", desc: "The Indian Journal of Social Work. 72 (4), 617-634.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "Indian Journal Article", title: "Datta, Vrinda & Goyal, Jaya. (2011). Reaching the Unreached: The Integrated Child Development Scheme in Maharashtra.", desc: "The Indian Journal of Social Work. 72 (4), 589-604.", link: "https://www.circadianconnect.com/child-nutrition-governance", category: "Nutrition Governance" },
+    { type: "Paper Presented", title: "Can unequal partners succeed with ‘matched efforts’? Lessons from UK-India partnerships in Higher Education.", desc: "Co-authored by Jaya Goyal and Shrikant Wad, presented by Jaya Goyal at BAICE (British Association for International Comparative Education) at the University of Edinburgh, Scotland UK, representing Circadian Connect LLP, on 13th September 2022.", link: "https://www.circadianconnect.com/international-higher-education-partnersh-1", category: "Higher Education" },
+    { type: "Strategy Development Paper", title: "Are matched efforts viable in North-South partnerships? Learnings from UK-India Higher Education Initiative (UKIERI)", desc: "Co-authored by Shrikant Wad and Jaya Goyal to be presented by Jaya Goyal at CESA (Comparative Education Society of Asia) 11th Biennial conference at Hiroshima in November 24-26, 2023.", link: "https://www.circadianconnect.com/international-higher-education-partnersh-1", category: "Higher Education" },
+    { type: "Evidence-Based Report", title: "Analysis of OBC Reservation Policy", desc: "An evidence-based report by TISS and funded by NASI (National Academy of Sciences, India) followed by a paper published in India’s highly rated journal - Economic and Political Weekly (EPW) in 2010.", link: "https://www.circadianconnect.com/international-higher-education-partnersh-1", category: "Higher Education" },
+    { type: "Innovative Governance Reform", title: "Outcome Budget & Social Audits, with the Government of Maharashtra.", desc: "Outcome Budget with 32 government schemes across 11 departments was published as a special issue of TISS’s in-house journal - the Indian Journal of Social Work (IJSW).", link: "https://www.circadianconnect.com/esg-environment-social-governance", category: "ESG" },
+    { type: "Report", title: "Report on Narmada Sardar Sarovar Dam", desc: "Presents the longest litigation case from India’s independence, from a scientific and humanitarian lens. A report by TISS Mumbai was released in Bhopal by actor Shabana Azmi and advised against increasing the height of the dam.", link: "https://www.circadianconnect.com/esg-environment-social-governance", category: "ESG" },
+    { type: "Project Analysis", title: "The Urban Age Project", desc: "By LSE Cities and TISS Mumbai compared the tracks of development of many cities of the world on various development parameters.", link: "https://www.circadianconnect.com/esg-environment-social-governance", category: "ESG" },
+    { type: "Case Study", title: "Goyal, Jaya. (2021). Science Diplomacy & Gender: A Case Study of the British Council.", desc: "Science Diplomacy: A New Chapter in IISF 2020. January-March 2021. 4(3). 9-12.", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Paper Presented", title: "Goyal, Jaya 2021. The expanding scope of careers for Women in STEM. Science Diplomacy and Gender", desc: "A paper presented virtually at India International Science Festival on December 24, 2020 organised by Department of Science and Technology and CSIR Govt of India.", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Newspaper Article", title: "Goyal, Jaya, 2017. Ponder Over Potbelly.", desc: "The Asian Age. August 8.", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Quoted Article", title: "Gender Discourse by Mumbai Mix Team", desc: "May 10, 2017 The Afternoon Dispatch and Courier", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Quoted Article", title: "Why do women quit working? by Vibha Singh", desc: "April 8, 2017 Free Press Journal Mumbai Edition", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Quoted Article", title: "Are you Ready to be a Mom? By Vibha Singh", desc: "March 4, 2017 Free Press Journal Mumbai Edition", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Book Chapter", title: "Role of State in Public Private Partnerships in Reproductive & Child Health Services", desc: "A study funded by Observer Research Foundation in 2007, Goyal, Jaya. 2011.", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" },
+    { type: "Newspaper Article", title: "Goyal, Jaya. 2006. Sex Sense:", desc: "Mumbai Mirror. February 16.", link: "https://www.circadianconnect.com/women-in-science-gender", category: "Women in Science" }
+  ];
+
+  const navItems = [
+    { id: 'home',      label: 'Home' },
+    { id: 'usecases',  label: 'Use Cases - Responsible AI' },
+    { id: 'research_work', label: 'Research Work' },
+    { id: 'about',     label: 'About Us' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-[#f97316]/20 selection:text-[#4c1d95] flex flex-col relative">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
+            <img src="/circadian_logo.png" alt="Circadian Connect Logo" className="h-10 w-auto" />
+            <div className="flex flex-col">
+              <span className="font-display font-black text-[#4c1d95] text-xl leading-none tracking-tight">Circadian</span>
+              <span className="font-display font-bold text-[#ea580c] text-sm leading-none tracking-wide">Connect</span>
+            </div>
+          </div>
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`text-sm font-bold uppercase tracking-wide transition-colors duration-200 ${
+                  activeTab === item.id ? 'text-[#f97316]' : 'text-slate-600 hover:text-[#4c1d95]'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+          <button className="lg:hidden p-2 text-slate-600" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="lg:hidden bg-white border-t border-slate-100 overflow-hidden"
+            >
+              <div className="px-6 py-4 flex flex-col gap-4">
+                {navItems.map(item => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveTab(item.id); setIsMobileMenuOpen(false); }}
+                    className={`text-left text-sm font-bold uppercase tracking-wide py-2 ${
+                      activeTab === item.id ? 'text-[#f97316]' : 'text-slate-600'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      <main className="flex-1 flex flex-col relative w-full overflow-hidden">
+        <AnimatePresence mode="wait">
+          {activeTab === 'home' && (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              className="flex-1 w-full"
+            >
+              <div className="relative w-full bg-slate-900 overflow-hidden">
+                <div className="absolute inset-0">
+                  <img src="/hero_professional.png" className="w-full h-full object-cover opacity-40" alt="Hero Background" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+                </div>
+                <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-40">
+                  <div className="max-w-3xl space-y-8">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                      <Sparkles className="h-4 w-4 text-[#f97316]" />
+                      <span className="text-xs font-bold text-white uppercase tracking-wider">Research Solutions Provider</span>
+                    </div>
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight">
+                      Bridging <span className="text-[#f97316]">Science,</span> <br />Society & Policy
+                    </h1>
+                    <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl">
+                      Curating design and methodology at the interface of science, society, and policy. Empowering sustainable, inclusive solutions.
+                    </p>
+                    <div className="flex flex-wrap gap-4 pt-4">
+                      <Button variant="teal" size="xl" onClick={() => setActiveTab('usecases')}>Explore AI Projects</Button>
+                      <Button variant="outline-white" size="xl" onClick={() => setActiveTab('about')}>About Us</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="py-20 px-6 bg-white border-b border-slate-200">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <Globe className="h-8 w-8 text-[#f97316] mb-4" />
+                    <h3 className="text-xl font-bold text-[#4c1d95] mb-2">Global Reach</h3>
+                    <p className="text-slate-600">Executing research across US, UK, and India with diverse cultural contexts.</p>
+                  </div>
+                  <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <ShieldAlert className="h-8 w-8 text-[#f97316] mb-4" />
+                    <h3 className="text-xl font-bold text-[#4c1d95] mb-2">Responsible AI</h3>
+                    <p className="text-slate-600">Partnering with leading tech giants to ensure AI equity and fairness.</p>
+                  </div>
+                  <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <BookOpen className="h-8 w-8 text-[#f97316] mb-4" />
+                    <h3 className="text-xl font-bold text-[#4c1d95] mb-2">Academic Rigor</h3>
+                    <p className="text-slate-600">Over 17 years of deep methodological and policy research experience.</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+{/* ════════════════════════════════════════ USE CASES INDIA ══ */}
+          {activeTab === 'usecases_india' && (
+            <motion.div
+              key="usecases_india"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="py-12 md:py-20 px-6 md:px-10 lg:px-16"
+            >
+              <div className="max-w-7xl mx-auto space-y-12">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h1 className="text-4xl md:text-5xl font-black text-[#4c1d95] tracking-tight mb-6">
+                    Use Case - India
+                  </h1>
+                  <p className="text-xl text-slate-600 leading-relaxed">
+                    A comprehensive overview of our deep-rooted projects, academic publications, and governance evaluations across core Indian themes.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  {indiaUseCases.map((uc, i) => (
+                    <Card key={i} className="group overflow-hidden bg-white hover:shadow-xl transition-all duration-300 w-full max-h-[400px]">
+                      <div className="flex flex-col md:flex-row h-full">
+                        <div className="md:w-1/2 shrink-0 h-[200px] md:h-[400px] overflow-hidden relative border-b md:border-b-0 md:border-r border-slate-100">
+                          <img
+                            src={uc.image}
+                            alt={uc.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg border border-white/20 shadow-sm">
+                            <span className="text-xs font-bold text-[#f97316] uppercase tracking-wider">{uc.theme}</span>
+                          </div>
+                        </div>
+                        <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-start overflow-y-auto max-h-[400px] custom-scrollbar">
+                          <h3 className="text-2xl font-bold text-[#4c1d95] mb-4 leading-snug group-hover:text-[#6d28d9] transition-colors">
+                            {uc.title}
+                          </h3>
+                          <p className="text-slate-600 leading-relaxed mb-6">
+                            {uc.description}
+                          </p>
+                          <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 mb-6">
+                            <h4 className="text-sm font-bold text-slate-800 uppercase tracking-wide mb-3">Key Projects & Publications</h4>
+                            <ul className="space-y-3">
+                              {uc.projects.map((proj, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
+                                  <span className="text-[#f97316] mt-0.5">•</span>
+                                  <span className="leading-relaxed">{proj}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="mt-auto pt-2">
+                            <a
+                              href={uc.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center text-sm font-bold text-[#f97316] hover:text-[#ea580c] transition-colors"
+                            >
+                              Read More / Original Source
+                              <ArrowUpRight className="ml-1 h-4 w-4" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          
+
+{/* ════════════════════════════════════════ ABOUT ══ */}
+          {activeTab === 'about' && (
+            <motion.div
+              key="about"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              className="flex-1 w-full bg-[#f5f6f8]"
+            >
+              <div className="w-full px-6 md:px-12 py-20 space-y-20">
+                <div className="text-center w-full space-y-6">
+                  <Eyebrow>Our Mission</Eyebrow>
+                  <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#4c1d95] font-black tracking-tight leading-tight">
+                    Bridging Science, Society, <br />
+                    <span className="text-[#f97316]">and Policy</span>
+                  </h1>
+                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl font-light">
+                    Circadian Connect LLP is a for-profit research solutions provider committed to curating design and methodology at the interface of science, society, and policy. We believe that sustainable and inclusive solutions can only be achieved when social institutions and actors are considered in Science and Technology innovations. We strive for scientific excellence and social responsibility in all of our endeavors, working closely with clients to achieve our shared goals.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="text-center max-w-2xl mx-auto">
+                    <h2 className="font-display text-3xl md:text-4xl text-[#4c1d95] font-bold tracking-tight">Who We Serve</h2>
+                    <p className="text-sm text-slate-500 mt-2">Five core international stakeholder groups we tailor our socio-technical expertise for.</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {[
+                      {
+                        n: '01', title: 'Applied AI Research & Deployment Institutes',
+                        desc: 'For institutes scaling AI deployments in international contexts. We provide localised India-side field validation, user trust auditing, and bias testing.',
+                        icon: Sparkles, color: NAVY
+                      },
+                      {
+                        n: '02', title: 'International Development & Humanitarian NGOs',
+                        desc: 'For NGOs deploying digital tools for vulnerable and multilingual populations. We help you design AI-aware Theory of Change frameworks.',
+                        icon: Users, color: TEAL
+                      },
+                      {
+                        n: '03', title: 'Boutique Digital & Policy Consultancies',
+                        desc: 'For consultancies bidding on and implementing complex digital projects. We plug in as your specialised India partner.',
+                        icon: Briefcase, color: '#b45309'
+                      },
+                      {
+                        n: '04', title: 'Bilateral & Multilateral Development Agencies',
+                        desc: 'For donor agencies managing technical cooperation programmes. We verify compliance with international regulations.',
+                        icon: ShieldAlert, color: '#b91c1c'
+                      },
+                      {
+                        n: '05', title: 'Independent Evaluation & Policy Advisory Bodies',
+                        desc: 'For evaluation bodies overseeing international programmes. We help modernise evaluation toolkits.',
+                        icon: GraduationCap, color: '#1d4ed8'
+                      },
+                    ].map((item) => {
+                      const IconComp = item.icon;
+                      return (
+                        <Card key={item.n} className="p-5 flex flex-col">
+                          <div className="flex items-start gap-3 mb-3">
+                            <div
+                              className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0"
+                              style={{ background: item.color }}
+                            >
+                              <IconComp className="h-5 w-5 text-white" />
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-bold text-slate-400 font-mono">{item.n}</span>
+                              <h4 className="font-bold text-sm text-[#4c1d95] leading-snug">{item.title}</h4>
+                            </div>
+                          </div>
+                          <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="space-y-10 pt-10 border-t border-slate-200">
+                  <div className="text-center max-w-2xl mx-auto space-y-3">
+                    <Eyebrow>Leadership</Eyebrow>
+                    <h2 className="font-display text-3xl md:text-4xl text-[#4c1d95] font-bold tracking-tight">Meet Our Founder Director</h2>
+                    <p className="text-sm text-slate-500">A visionary leader with 17+ years of experience curating research solutions.</p>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <Card className="p-8 lg:col-span-2 space-y-6 border-t-4 border-t-[#ea580c] bg-white">
+                      <div className="space-y-2">
+                        <h3 className="text-3xl font-display font-bold text-[#4c1d95]">Dr. Jaya Goyal</h3>
+                        <p className="text-[#ea580c] font-semibold text-sm uppercase tracking-wider">Ph.D. (TISS / LSE) • 17+ Yrs Leadership</p>
+                      </div>
+                      <div className="text-slate-600 text-sm leading-relaxed space-y-4">
+                        <p>After 17 years as a passionate policy researcher and Science Diplomat, Dr. Goyal resigned from her role as Head of Higher Education (National role) at the British Council India in March 2022.</p>
+                        <p>Driven to set up an interdisciplinary research enterprise, she founded Circadian Connect LLP. In mid-2022, Circadian arguably became the first social scientist-led company in India to partner with Google LLC USA on a 'Responsible AI' research project.</p>
+                        <p>Her interdisciplinary interests span social policy, the IAD Framework, decolonial lenses in higher education, international partnerships, nutrition governance, qualitative methodology, and the political economy of health.</p>
+                      </div>
+                    </Card>
+                    <div className="space-y-6">
+                      <Card className="p-6 bg-gradient-to-br from-[#4c1d95] to-[#6d28d9] text-white">
+                        <h4 className="font-display font-bold text-xl mb-4 text-white">Career Highlights</h4>
+                        <ul className="space-y-4">
+                          <li className="flex items-start gap-3">
+                            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-xs font-bold">1</div>
+                            <p className="text-xs text-white/90 leading-snug">Managed research portfolios worth crores at National Higher Education Mission RUSA and millions of pounds at British Council India.</p>
+                          </li>
+                        </ul>
+                      </Card>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ════════════════════════════════════════ USE CASES ══ */}
+          {activeTab === 'usecases' && (
+            <motion.div
+              key="usecases"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="pt-24 pb-12"
+            >
+              <div className="w-full px-4 md:px-8 lg:px-12 space-y-24">
+                <div className="space-y-6">
+                  <div className="text-center max-w-2xl mx-auto">
+                    <h2 className="font-display text-3xl md:text-4xl text-[#4c1d95] font-bold tracking-tight">Our Global Project Footprint</h2>
+                    <p className="text-sm text-slate-500 mt-2">A snapshot of our international research, consultancy, and methodology projects.</p>
+                  </div>
+                  <div className="grid grid-cols-1 gap-8 w-full">
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj1_real.png" alt="Building Stereotype Repositories with LLMs and Community Engagement for Scale and Depth (Projects SPICE and BiNDI) - Google Alphabet LLC, Google Research Labs (2022-23)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">USA</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Artificial Intelligence / Natural Language Processing (NLP)">Artificial Intelligence / Natural Language Processing (NLP)</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Building Stereotype Repositories with LLMs and Community Engagement for Scale and Depth (Projects SPICE and BiNDI) - Google Alphabet LLC, Google Research Labs (2022-23)">Building Stereotype Repositories with LLMs and Community Engagement for Scale and Depth (Projects SPICE and BiNDI) - Google Alphabet LLC, Google Research Labs (2022-23)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p><strong>C3NLP 2023:</strong> Measurements of fairness in NLP often perpetuate a Western narrative. To address this, we leverage community engagement and generative models to build a benchmark targeting stereotyping harms across diverse and intersectional identities.</p>
+                          <p><strong>NeurIPS 2023:</strong> Current evaluation paradigms underrepresent local socio-cultural perspectives. We demonstrate a socio-culturally aware expansion of evaluation resources in the Indian societal context, generating over 1000 stereotypes across unique identities to better calibrate LLM evaluations.</p>
+                          <p><strong>Methodological Impact:</strong> Our collaborative methodology combined deep community engagement with generative AI capabilities to identify and mitigate bias in AI models. This comprehensive approach ensured that the AI evaluation frameworks are not just technically sound, but also deeply grounded in the nuanced socio-cultural realities of underrepresented populations, setting a new global standard for responsible AI metrics.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Technology Giant (Google Alphabet LLC)">Technology Giant (Google Alphabet LLC)</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj2_real.png" alt="Formalize Hybrid GeoAI Workflow as Constrained Optimization Model (2026) " className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">USA</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Geospatial AI / Data Science">Geospatial AI / Data Science</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Formalize Hybrid GeoAI Workflow as Constrained Optimization Model (2026) ">Formalize Hybrid GeoAI Workflow as Constrained Optimization Model (2026) </h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>This initiative focused on the structural formalization of a complex hybrid GeoAI workflow. The primary objective was to translate multi-layered geospatial data processes into a rigorous mathematical constrained optimization model.</p>
+                          <p>By bridging the gap between traditional geospatial analysis, advanced mathematical formalism, and cutting-edge machine learning techniques, we enabled the client to establish a robust, scalable foundation for future GeoAI applications. This innovative approach significantly improved algorithmic efficiency, resource allocation, and spatial prediction reliability across diverse environmental datasets.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Researcher / Academic">Researcher / Academic</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj3_real.png" alt="Validate an Ethical AI Governance Framework Developed through Design Science Research Methodology (2026)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">UAE</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Responsible AI / AI Ethics / Governance">Responsible AI / AI Ethics / Governance</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Validate an Ethical AI Governance Framework Developed through Design Science Research Methodology (2026)">Validate an Ethical AI Governance Framework Developed through Design Science Research Methodology (2026)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Our team provided critical independent validation for a newly proposed AI governance framework. Utilizing the rigorous Design Science Research (DSR) methodology, we systematically reviewed the ethical dimensions, theoretical soundness, and practical applicability of the framework.</p>
+                          <p>We conducted comprehensive impact assessments and stakeholder analyses to ensure that the governance protocols were not only theoretically robust but also actionable. The project ultimately delivered a highly practical blueprint for responsible AI deployment in high-stakes environments, minimizing regulatory risks while maximizing societal benefit.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="University Researcher">University Researcher</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj4_real.png" alt="Statistical Consultant – EV Market Data Analysis (S&P Global Mobility Access) (2025)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">USA </span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Automotive / EV / Data Analytics">Automotive / EV / Data Analytics</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Statistical Consultant – EV Market Data Analysis (S&P Global Mobility Access) (2025)">Statistical Consultant – EV Market Data Analysis (S&P Global Mobility Access) (2025)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Serving as lead statistical consultants, we conducted an in-depth analysis of comprehensive electric vehicle (EV) market datasets provided by S&P Global Mobility Access. Our work encompassed advanced data modeling, trend forecasting, and interpretative analysis to uncover nuanced shifts in EV adoption rates globally.</p>
+                          <p>The insights generated from our rigorous statistical modeling empowered key industry stakeholders to make data-driven decisions regarding market entry, infrastructure investment, and long-term strategic positioning within the rapidly evolving automotive landscape.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Corporate / Market Research Firm">Corporate / Market Research Firm</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj5_real.png" alt="Research and Provide Scholarly/Peer-Reviewed Sources for Healthcare Related Best Practice (2024)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">Canada</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Healthcare / Evidence-Based Medicine">Healthcare / Evidence-Based Medicine</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Research and Provide Scholarly/Peer-Reviewed Sources for Healthcare Related Best Practice (2024)">Research and Provide Scholarly/Peer-Reviewed Sources for Healthcare Related Best Practice (2024)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>This project required the systematic identification, critical appraisal, and synthesis of high-quality scholarly and peer-reviewed literature concerning healthcare best practices. Our rigorous methodology ensured that only the most robust, verifiable evidence was curated and integrated into the final analysis.</p>
+                          <p>The resulting comprehensive literature review and evidence base provided actionable insights that directly informed clinical guidelines, public health policy development, and hospital operational improvements, successfully bridging the critical gap between academic research and practical healthcare delivery.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Healthcare Professional / Practitioner of a Large Hospital">Healthcare Professional / Practitioner of a Large Hospital</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj6_real.png" alt="Have Digital Financial Products Helped Women to Have More Independence from Male Domination? (2024)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">India</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Gender Studies / Financial Inclusion / Development Economics">Gender Studies / Financial Inclusion / Development Economics</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Have Digital Financial Products Helped Women to Have More Independence from Male Domination? (2024)">Have Digital Financial Products Helped Women to Have More Independence from Male Domination? (2024)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>We conducted an extensive mixed-methods research study investigating the socioeconomic impact of digital financial product adoption on women's autonomy. The project integrated a thorough, multi-disciplinary literature review with rigorous qualitative and quantitative primary data analysis.</p>
+                          <p>By examining the intersection of digital finance and gender dynamics, we successfully identified key structural barriers and socio-cultural enablers of financial independence. Our findings culminated in a comprehensive report framing actionable policy implications designed to drive meaningful gender mainstreaming in future development initiatives.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="HR Training Firm">HR Training Firm</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj7_real.png" alt="Pre Peer Review Evaluation – Formal Framework for Reasoning Stability and Inquiry (AI / Epistemology) (2026)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">USA</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Responsible AI / Formal Methods / Philosophy of AI">Responsible AI / Formal Methods / Philosophy of AI</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Pre Peer Review Evaluation – Formal Framework for Reasoning Stability and Inquiry (AI / Epistemology) (2026)">Pre Peer Review Evaluation – Formal Framework for Reasoning Stability and Inquiry (AI / Epistemology) (2026)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Our experts conducted an in-depth, pre-peer review evaluation of a dense, highly interdisciplinary AI theory program spanning epistemology, cognitive science, and formal logic. We meticulously analyzed the formal claims, stability arguments, operator semantics, and the underlying empirical design.</p>
+                          <p>By providing structured, rigorous academic feedback and constructive methodological recommendations, we ensured the theoretical framework met the absolute highest standards of academic excellence prior to its submission for formal peer review at top-tier international journals.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Independent Researcher / Research Lab">Independent Researcher / Research Lab</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj8_network.png" alt="Social Network Analysis of Persons Associated with County Government (2025)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">USA</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Political Science / Governance / Network Analysis & AI App">Political Science / Governance / Network Analysis & AI App</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Social Network Analysis of Persons Associated with County Government (2025)">Social Network Analysis of Persons Associated with County Government (2025)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Leveraging advanced Social Network Analysis (SNA) techniques, we mapped and analyzed the complex relational structures among key individuals associated with county government operations. The project involved identifying influential clusters, central nodes, and hidden influence patterns within the institutional network.</p>
+                          <p>These critical insights revealed underlying governance dynamics and informal power structures, providing government stakeholders with a clear, data-driven understanding of communication flows, operational bottlenecks, and opportunities for structural reform.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Researcher / Academic / Government Analyst">Researcher / Academic / Government Analyst</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj9_real.png" alt="Strategic International Relations Research (2025)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">Saudi Arabia</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="International Relations / Policy / Healthcare-Adjacent">International Relations / Policy / Healthcare-Adjacent</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Strategic International Relations Research (2025)">Strategic International Relations Research (2025)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>We executed a comprehensive strategic research initiative focused on contemporary international relations and global policy landscapes. The project involved a deep-dive analysis into cross-border institutional dynamics, geopolitical shifts, and emerging global macroeconomic trends.</p>
+                          <p>The rigorous synthesis of these complex factors culminated in the delivery of highly tailored, strategic recommendations. This vital intelligence directly aligned with and advanced the client's international mission, enabling them to navigate complex diplomatic environments with confidence and foresight.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="NGO / Healthcare Organisation / Policy Body">NGO / Healthcare Organisation / Policy Body</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj10_real.png" alt="CryoCorp O2 LLP – Industrial Oxygen Plant Business Development & Market Strategy (2025)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">India (with East Africa market exploration)</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Cryogenic Technology / Industrial Gas / Green Energy">Cryogenic Technology / Industrial Gas / Green Energy</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="CryoCorp O2 LLP – Industrial Oxygen Plant Business Development & Market Strategy (2025)">CryoCorp O2 LLP – Industrial Oxygen Plant Business Development & Market Strategy (2025)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Operating in a co-founder capacity, we spearheaded the foundational market research and comprehensive business development strategy for CryoCorp O2 LLP. This multifaceted role involved developing a robust procurement strategy—specifically navigating the complex GEM portal—and leading intensive investor outreach initiatives.</p>
+                          <p>Furthermore, we designed and executed an aggressive go-to-market strategy aimed at successfully deploying industrial oxygen plants across diverse, high-need markets in India and East Africa, securing vital early-stage partnerships and funding.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Private Sector / Co-Founder / LLP">Private Sector / Co-Founder / LLP</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj11_real.png" alt="MOOCs, AI & Education (2026)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">Oman</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="AI / Education / Learning Analytics / University">AI / Education / Learning Analytics / University</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="MOOCs, AI & Education (2026)">MOOCs, AI & Education (2026)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>We collaborated extensively with leading university researchers to investigate the transformative applications of Artificial Intelligence within Massive Open Online Courses (MOOCs) and broader higher-education environments.</p>
+                          <p>Our contributions spanned complex data analysis, the interpretation of advanced learning analytics, and collaborative manuscript writing. The resulting academic publication provided critical insights into how AI-driven tools can enhance pedagogical strategies, personalize learning pathways, and dramatically improve global student engagement.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="Technology Giant / Academic Collaboration">Technology Giant / Academic Collaboration</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow md:max-h-[400px]">
+                      <div className="w-full md:w-1/2 h-48 md:h-auto shrink-0 overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-100">
+                        <img src="/proj12_real.png" alt="Public Health Research Protocol Review & Refinement (2024)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                      </div>
+                      <div className="p-6 flex flex-col flex-1 space-y-4 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#ea580c] bg-[#f97316]/10 px-2 py-1 rounded shrink-0">South Africa</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6d28d9] bg-[#6d28d9]/10 px-2 py-1 rounded text-right line-clamp-1" title="Public Health / Healthcare">Public Health / Healthcare</span>
+                        </div>
+                        <h4 className="font-bold text-sm md:text-base text-[#4c1d95] leading-snug line-clamp-3" title="Public Health Research Protocol Review & Refinement (2024)">Public Health Research Protocol Review & Refinement (2024)</h4>
+                        
+                        <div className="text-xs text-slate-600 leading-relaxed space-y-3">
+                          <p>Our team was tasked with the comprehensive review and methodological refinement of a complex public health research protocol. We systematically strengthened the retrospective cross-sectional study design, optimized the STATA-based statistical analysis plan, and expanded the underlying literature review to include the latest epidemiological data.</p>
+                          <p>By rigorously refining the study variables and producing a concise, high-impact academic executive summary, we significantly elevated the research protocol's clarity, rigor, and potential for securing rapid Institutional Review Board (IRB) approval.</p>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+                          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Client</div>
+                          <div className="text-xs font-bold text-[#4c1d95] truncate" title="University Researcher">University Researcher</div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+          {/* ════════════════════════════════════════ RESEARCH WORK ══ */}
+          {activeTab === 'research_work' && (
+            <motion.div
+              key="research_work"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="py-16 md:py-24 px-4 md:px-8 lg:px-12 bg-white flex-1"
+            >
+              <div className="max-w-6xl mx-auto space-y-16">
+                
+                {/* Header */}
+                <div className="text-center space-y-6 max-w-3xl mx-auto">
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#4c1d95] tracking-tight">Research Work</h2>
+                  <p className="text-lg text-slate-600 leading-relaxed">
+                    A comprehensive collection of our latest publications, journal articles, and strategic reports driving evidence-based governance across multiple domains.
+                  </p>
+                </div>
+
+                {/* Grid of Publications */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                  {researchPublications.map((pub, idx) => (
+                    <Card key={idx} className="flex flex-col md:flex-row overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 w-full group max-h-[400px]">
+                      
+                      {/* Left Side Placeholder Graphic */}
+                      <div className="w-full md:w-1/2 relative bg-gradient-to-br from-purple-50 to-orange-50 flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-slate-100">
+                        <div className="absolute top-4 left-4">
+                          <span className="px-3 py-1 bg-white/80 backdrop-blur text-[#f97316] text-[10px] font-bold uppercase rounded-full shadow-sm">{pub.category}</span>
+                        </div>
+                        <div className="h-20 w-20 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-300 mb-4">
+                          <BookOpen className="h-8 w-8 text-[#4c1d95]" />
+                        </div>
+                        <span className="text-xs font-bold text-center text-slate-400 uppercase tracking-wider">{pub.type}</span>
+                      </div>
+
+                      {/* Right Side Text */}
+                      <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-bold text-[#4c1d95] leading-snug">
+                            {pub.title}
+                          </h3>
+                          <p className="text-sm text-slate-600 leading-relaxed">
+                            {pub.desc}
+                          </p>
+                        </div>
+                        
+                        <div className="mt-6 pt-6 border-t border-slate-100 flex items-center justify-end">
+                          <a href={pub.link} target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="sm" className="w-full md:w-auto hover:bg-[#4c1d95] hover:text-white transition-colors group/btn">
+                              Read More <ArrowUpRight className="ml-1.5 h-4 w-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+
+      </AnimatePresence>
+          {/* ── Consultation Modal ── */}
+      <AnimatePresence>
+        {consultationModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ background: 'rgba(14,27,53,0.6)', backdropFilter: 'blur(6px)' }}
+            onClick={(e) => { if (e.target === e.currentTarget) setConsultationModalOpen(false); }}
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0, y: 16 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.94, opacity: 0, y: 16 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="bg-white rounded-2xl p-7 md:p-8 max-w-md w-full border border-slate-200 shadow-2xl space-y-5 relative"
+            >
+              <button
+                onClick={() => setConsultationModalOpen(false)}
+                className="absolute top-5 right-5 h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <div className="space-y-4">
+                <div
+                  className="h-10 w-10 rounded-xl flex items-center justify-center mb-3"
+                  style={{ background: NAVY }}
+                >
+                  <FileText className="h-5 w-5 text-[#f97316]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#4c1d95] font-display leading-snug">Initial Inquiry Questionnaire</h3>
+                
+                <div className="space-y-3 text-slate-600 text-sm leading-relaxed">
+                  <p className="font-semibold text-slate-800">Thank you for connecting with us.</p>
+                  <p>
+                    To help us prepare for our first meeting and develop a tailored approach, please complete the brief questionnaire below. It takes about 10-15 minutes.
+                  </p>
+                  <p>
+                    Your answers will help us understand your organisation's context, the service(s) you are considering, your objectives, timeline, budget and key parameters — so that our discussion is efficient and we can jointly design the right study or consultancy.
+                  </p>
+                  <p>
+                    Once you submit your responses, we will review them and follow-up to schedule an introductory meeting to discuss next steps.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100 flex gap-3 justify-end items-center">
+                <button
+                  type="button"
+                  onClick={() => setConsultationModalOpen(false)}
+                  className="px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-sm font-semibold rounded-full text-slate-500 transition-colors"
+                >
+                  Cancel
+                </button>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScBdElMufZqEeEGE6HuvwEfKq2HOu30-KKKXnKFcjBLTBHXHw/viewform"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setConsultationModalOpen(false)}
+                  className="inline-flex items-center justify-center font-bold uppercase tracking-wide transition-all duration-200 focus-visible:outline-none active:scale-[0.97] select-none cursor-pointer px-6 py-3 text-sm rounded-full bg-[#f97316] hover:bg-[#ea580c] text-white shadow-md shadow-[#f97316]/20"
+                >
+                  Open Questionnaire
+                  <ArrowUpRight className="ml-1.5 h-4 w-4" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      </main>
+    </div>
+  );
+}
+

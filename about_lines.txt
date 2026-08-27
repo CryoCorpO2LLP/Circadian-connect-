@@ -1,0 +1,13 @@
+488: { id: 'about',     label: 'About Us' },
+970: <Button className="w-full sm:w-auto" variant="outline" size="xl" onClick={() => setActiveTab('about')}>Discover Who We Are</Button>
+1314: <Button variant="primary" size="xl" onClick={() => setActiveTab('about')}>
+1405: {/* ════════════════════════════════════════ ABOUT ══ */}
+1406: {activeTab === 'about' && (
+1408: key="about"
+1542: About Circadian Connect
+1545: Watch our presentation to learn more about our mission, methodology, and the impact we create at the intersection of science and society.
+1550: src="/about_video.mp4"
+1597: "We are seeing a lot of complementary data in this collection... which speaks to the value-add of this research methodology that we co-created with you. Excited to eventually write the paper about this."
+1692: <h4 className="font-display font-bold text-lg text-primary">About Circadian Connect</h4>
+2233: <p><strong>Make the Invisible Visible. Hold the State Accountable.</strong> Poor outcomes aren't just about a lack of funds — they are driven by information barriers, hidden hierarchies, and power misuse at the local level.</p>
+2479: To help us prepare for our first meeting and develop a tailored approach, please complete the brief questionnaire below. It takes about 10-15 minutes.
